@@ -21,10 +21,10 @@ print("Parte A - DESEMPLEADOS")
 # contar la cantidad de desempleados si PEA = 1 y Desempleo = 0
 desempleados = data[(data['PEA'] == 1) & (data['Desempleo'] == 0)]
 #contar la cantidad de personas desempleados
-print(desempleados.count())
-tea = data['PEA'].count()
+print(len(desempleados))
+tea = len(data['PEA'])
 print(tea)
-desempleo = desempleados.count() / tea
+desempleo = len(desempleados) / tea
 print("1- a- La taza de desempleo es: ", desempleo)
 
 # utilizando desempleo agruparlos por rango de edad de 14 a 17, 18 a 25, 26 a 40 y más de 40
@@ -32,7 +32,7 @@ desempleados_14_17 = desempleados[(desempleados['Edad'] >= 14) & (desempleados['
 desempleados_18_25 = desempleados[(desempleados['Edad'] >= 18) & (desempleados['Edad'] <= 25)]
 desempleados_26_40 = desempleados[(desempleados['Edad'] >= 26) & (desempleados['Edad'] <= 40)]
 desempleados_41 = desempleados[(desempleados['Edad'] >= 41)]
-desempleadosAr = [desempleados_14_17.count(), desempleados_18_25.count(), desempleados_26_40.count(), desempleados_41.count()]
-print(desempleados_14_17.count())   
+desempleadosAr = [len(desempleados_14_17), len(desempleados_18_25), len(desempleados_26_40), len(desempleados_41)]
 
-
+# contar la cantidad de personas desempleados entre 14 y 17 años
+print("1- b- La cantidad de personas desempleadas entre 14 y 17 años es: ", len(desempleados_14_17))
