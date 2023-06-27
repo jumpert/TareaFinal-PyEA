@@ -51,7 +51,5 @@ print("2- a- La media del salario es: ", media)
 print("2- b- La mediana del salario es: ", mediana)
 print("2- c- La moda del salario es: ", moda) #esto da cero pero no sé si está bien
 
-
-
-
-
+# contar la cantidad de personas desempleados entre 14 y 17 años
+print("1- b- La cantidad de personas desempleadas entre 14 y 17 años es: ", len(desempleados_14_17))
