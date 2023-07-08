@@ -41,11 +41,28 @@ def guardarTxt(texto):
 def guardarImg(imagen):
     imagen_Objeto = Image(imagen, 400, 400)
     contenido.append(imagen_Objeto)
+    
+def guardarDoc(imagen, alto, ancho):
+    imagen_Objeto = Image(imagen, width=ancho, height=alto)
+    contenido.append(imagen_Objeto)
 
 text = "Proyecto Final - Probabilidad y Estadística Aplicada <br/><br/>"
 guardarHeader(text,1)
+text = "<br/><br/>"
+guardarTxt(text*4)
+text = "./documentos/logoUCU.png"
+guardarDoc(text, 200, 200)
+text = "<br/><br/>"
+guardarTxt(text*4)
 text = "Grupo: <br/> Estefany Clara, Gonzalo Paz, Juan Pérez y Lucas Cordero <br/><br/>"
 guardarTxt(text)
+text = "<br/><br/>"
+guardarTxt(text*6)
+
+text = "Introducción: <br/>"
+guardarHeader(text, 1)
+for i in range(1, 9):
+    guardarDoc('./documentos/info{}.png'.format(i), 600,500)
 
 text = "Anexo al informe: <br/>"
 guardarHeader(text, 2)
@@ -56,12 +73,12 @@ ventana.withdraw()
 names = ['ID', 'anio', 'mes', 'Sexo', 'Edad', 'region', 'PEA', 'Desempleo', 'Salario']
 data = pd.read_csv('./ECH_2022_PyE-2023.csv',sep=';', names=names, header=0)
 # eliminar los datos cuando los salarios son mayores a 5.000.000 y los que sean igual a 0
-data1 = data[data['Salario'] < 30000000]
+data1 = data[data['Salario'] < 6000000]
 data1 = data1[data1['Salario'] != 0]
 # extraer los datos de la columna Salario en una variable de tipo Array siempre que sean distintos de 0
 salarios = data1['Salario']
 salarios = salarios.values
-"""
+
 print("Proyecto Final - Probabilidad y Estadística Aplicada\n")
 print("")
 print("Parte A - DESEMPLEADOS")
@@ -103,11 +120,14 @@ text = "Parte B - HISTOGRAMA DESEMPLEADOS"
 guardarHeader(text, 2)
 edAr = ['14-17', '18-25', '26-40', '41+']
 # b) Histograma de cada muestra
+index = 0
 for tipo in desempleadosAr:
     sns.histplot(tipo, kde=True)
     plt.ylabel('Frecuencia')
     plt.xlabel('Edades')
-    plt.title('Histograma de desempleados por edades {}'.format(edAr[desempleadosAr.index(tipo)]))
+    
+    plt.title('Histograma de desempleados por edades {}'.format(edAr[index]))
+    index += 1
     try:
         plt.savefig('./desempleados/histograma_desempleados_{}.png'.format(len(tipo)))
         imagen = './desempleados/histograma_desempleados_{}.png'.format(len(tipo))
@@ -119,6 +139,8 @@ for tipo in desempleadosAr:
         guardarImg(imagen)
     plt.show()
 
+text = "<br/><br/>"
+guardarTxt(text*9)
 #Ejercicio parte 2 Salario
 #calcular media, mediana y moda del salario
 print("Parte 2 - SALARIO")
@@ -135,6 +157,8 @@ try:
     imagen = './salario/histograma_salario.png'
     guardarImg(imagen)
     plt.show()
+    text = "<br/><br/>"
+    guardarTxt(text*8)
 except:
     print("No se pudo generar el histograma de salario")
     text = "No se pudo generar el histograma de salario"
@@ -151,6 +175,9 @@ plt.savefig('./salario/boxplot_salario.png')
 imagen = './salario/boxplot_salario.png'
 guardarImg(imagen)
 plt.show()
+text = "<br/><br/>"
+guardarTxt(text*8)
+
 # Estudio de Boxplot  
 
 mediana = np.median(salarios)
@@ -185,6 +212,8 @@ plt.savefig('./salario/boxplot_salario_corregido.png')
 plt.show()
 imagen = './salario/boxplot_salario_corregido.png'
 guardarImg(imagen)
+text = "<br/><br/>"
+guardarTxt(text*8)
 
 # calcular la media y moda de la muestra
 media = np.mean(salarios)
@@ -198,13 +227,14 @@ print("Valores de estudio del Boxplot de Salarios")
 print("2) d. Q1: {}, Q3: {}, Mínimo: {}, Máximo: {}, RI: {}, BII: {}, BSI: {}".format(mediana, Q1, Q3, min_val, max_mal, RI, BII, BSI))
 text = "Valores de estudio del Boxplot de Salarios <br/> 2) d. Q1: {}, Q3: {}, Mínimo: {}, Máximo: {}, RI: {}, BII: {}, BSI: {}".format(mediana, Q1, Q3, min_val, max_mal, RI, BII, BSI)
 guardarTxt(text)
-
+text = "<br/><br/>"
+guardarTxt(text*6)
 # Elaborar Boxplot por genero (masculino y femenino) identificando en el plt el color por genero
 print("2) e. i. Elaborar un Boxplot por género (masculino y femenino)")
 text = "2) e. i. Elaborar un Boxplot por género (masculino y femenino)"
 guardarTxt(text)
 
-sns.boxplot(x=data['Sexo'], y=data['Salario'], palette=['blue', 'pink'])
+sns.boxplot(x=data1['Sexo'], y=data1['Salario'], palette=['blue', 'pink'])
 plt.title('Boxplot de salario por género')
 plt.xticks(
     ticks=[0, 1],
@@ -221,7 +251,7 @@ guardarTxt(text)
 
 sns.set_palette(['red', 'green', 'blue'])
 # Elaborar Boxplot por region
-sns.boxplot(x=data['region'], y=data['Salario'] , palette=['red', 'green', 'yellow'])
+sns.boxplot(x=data1['region'], y=data1['Salario'] , palette=['red', 'green', 'yellow'])
 plt.title('Boxplot de salario por región')
 plt.xlabel('Región')
 
@@ -233,7 +263,7 @@ plt.savefig('./salario/boxplot_salario_region.png')
 plt.show()
 imagen = './salario/boxplot_salario_region.png'
 guardarImg(imagen)
-"""
+
 
 # PARTE B)- ESTIMACIÓN 
 """
@@ -243,6 +273,8 @@ Suponer que el desempleo se distribuye de forma normal.
 1) Estimar el desempleo del total de la población
 2) Elabora intervalo de confianza con 95% de certeza para la variable desempleo.
 """
+text = "<br/><br/>"
+guardarTxt(text*9)
 text = "PARTE B)- ESTIMACIÓN"
 guardarHeader(text,2)
 # 1) Estimar el desempleo del total de la población
@@ -293,6 +325,8 @@ text = "El intervalo de confianza para la variable Desempleo es: {}".format(conf
 print("La muestra arroja que existe un intervalo de certeza del 95% que el desempleo es correcto según la muestra.")
 text += "<br/>La muestra arroja que existe un intervalo de certeza del 95% que el desempleo es correcto según la muestra."
 guardarTxt(text)
+text = "<br/><br/>"
+guardarTxt(text*2)
 
 print("C) PRUEBA DE HIÓTESIS \n1) DESEMPLEO:")
 text = "C) PRUEBA DE HIÓTESIS <br/>1) DESEMPLEO:"
@@ -309,13 +343,19 @@ print("p_value: " ,p_value)
 text = "t_static: {}<br/>p_value: {}".format(t_static, p_value)
 
 nivel_significancia = 0.05
-if p_value < nivel_significancia :
+margen_error = 0.0001 * nivel_significancia
+#se añade un margen de error al p value para saver si es considerable o no, ya que evidentemente nunca  va a dar exactamente igual al nivel de significancia
+# notese que el margen de error es del 0.01% del nivel de significancia (0.05) osea 0.0005 que equivale en porcentaje a 0.05%
+if (abs(p_value - nivel_significancia) < margen_error):
     print ("Se rechaza la hipótesis nula." )
     text += "<br/>Se rechaza la hipótesis nula."
 else:
     print ("No se rechaza la hipótesis nula." )
     text += "<br/>No se rechaza la hipótesis nula."
 guardarTxt(text)
+
+# como preguntar si un valor es igual al otro pero con margen de error de 5%
+
 
 print("2) SALARIO:")
 text = "2) SALARIO:"
@@ -334,15 +374,81 @@ print("la cantidad de salarios mujeres es: ",len(SalarioHombres))
 t_static, p_value = stats.ttest_ind(SalarioHombres['Salario'], SalarioMujeres['Salario'])
 print("t_static: ",t_static)
 print("p_value: " ,p_value)
+SalarioHombres = SalarioHombres[SalarioHombres['Salario'] < 6000000]
+SalarioMujeres = SalarioMujeres[SalarioMujeres['Salario'] < 6000000]
 
-SalarioHombres['Salario']
-SalarioMujeres['Salario']
-nivel_significancia = 0.01
+# boxplot de salario por sexo y por rangos de edad en 4 grupos: 14-17, 18-25, 26-40, 41+
+SalarioHombres14_17 = SalarioHombres[SalarioHombres['Edad'] <= 17]
+SalarioHombres18_25 = SalarioHombres[(SalarioHombres['Edad'] >= 18) & (SalarioHombres['Edad'] <= 25)]
+SalarioHombres26_40 = SalarioHombres[(SalarioHombres['Edad'] >= 26) & (SalarioHombres['Edad'] <= 40)]
+SalarioHombres41 = SalarioHombres[(SalarioHombres['Edad'] >= 41)]
 
-tabla, results = rp.ttest(SalarioHombres['Salario'].values-1, SalarioMujeres['Salario'].values-1, equal_variances = False)
+SalarioMujeres14_17 = SalarioMujeres[SalarioMujeres['Edad'] <= 17]
+SalarioMujeres18_25 = SalarioMujeres[(SalarioMujeres['Edad'] >= 18) & (SalarioMujeres['Edad'] <= 25)]
+SalarioMujeres26_40 = SalarioMujeres[(SalarioMujeres['Edad'] >= 26) & (SalarioMujeres['Edad'] <= 40)]
+SalarioMujeres41 = SalarioMujeres[SalarioMujeres['Edad'] >= 41]
 
+arSaHo = [SalarioHombres14_17['Salario'], SalarioHombres18_25['Salario'], SalarioHombres26_40['Salario'], SalarioHombres41['Salario']]
+arSaMu = [SalarioMujeres14_17['Salario'], SalarioMujeres18_25['Salario'], SalarioMujeres26_40['Salario'], SalarioMujeres41['Salario']] 
+rangos_edad = ['14-17', '18-25', '26-40', '41+']
+plt.boxplot(arSaHo)
+plt.title('Boxplot de Salario Hombres')
+plt.xlabel('Edades')
+plt.ylabel('Salario')
+plt.xticks([1, 2, 3, 4], ['14-17', '18-25', '26-40', '41+'])
+plt.savefig('./salario/boxplot_salario_hombres.png')
+plt.show()
+imagen = './salario/boxplot_salario_hombres.png'
+guardarImg(imagen)
 
+plt.boxplot(arSaMu)
+plt.title('Boxplot de Salario Mujeres')
+plt.xlabel('Edades')
+plt.ylabel('Salario')
+plt.xticks([1, 2, 3, 4], ['14-17', '18-25', '26-40', '41+'])
 
+plt.savefig('./salario/boxplot_salario_mujeres.png')
+plt.show()
+imagen = './salario/boxplot_salario_mujeres.png'
+guardarImg(imagen)
+
+arSaHoMean = [SalarioHombres14_17['Salario'].mean(), SalarioHombres18_25['Salario'].mean(), SalarioHombres26_40['Salario'].mean(), SalarioHombres41['Salario'].mean()]
+arSaMuMean = [SalarioMujeres14_17['Salario'].mean(), SalarioMujeres18_25['Salario'].mean(), SalarioMujeres26_40['Salario'].mean(), SalarioMujeres41['Salario'].mean()]
+
+# grafica de comparación de los primerios de salarios de hombres y mujeres por rango etario.
+ancho_barras = 0.35
+posiciones_hombres = np.arange(len(rangos_edad))
+plt.bar(posiciones_hombres, arSaHoMean, ancho_barras, label = "Hombres", color = 'blue')
+plt.bar(posiciones_hombres + ancho_barras, arSaMuMean, ancho_barras, label = "Mujeres", color = 'pink')
+plt.xlabel('Rango de Edad')
+plt.ylabel('Salario Promedio')
+plt.title('Comparación de Salarios Promedio por Rango de Edad')
+plt.legend()
+plt.xticks(posiciones_hombres + ancho_barras/2, rangos_edad)
+plt.savefig('./salario/comparacion_salarios_promedio.png')
+plt.show()
+imagen = './salario/comparacion_salarios_promedio.png'
+guardarImg(imagen)
+text = "<br/><br/>"
+guardarTxt(text*10)
+# Comentarios finales
+print("Conclusiones:\nComo grupo creemos que a este trabajo por ser el de final de Unidad, nos llevo más tiempo poder realizarlo. Debido a varios factores, como la complejidad del mismo, así como también que en algunas partes de la letra nos hubiera gustado tener más ideas de lo que se nos estaba pidiendo, ya que no quedaba muy claro.\nPor suerte para nosotros los apuntes tomados en clase, las respuestas de los profes a dudas de los compañeros y algunas propias, nos ayudaron a entender un poco mejor que es lo que se quería conseguir con este trabajo.")
+text = "Conclusiones:<br/>"
+guardarHeader(text,1)
+text = "Como grupo creemos que a este trabajo por ser el de final de Unidad, nos llevo más tiempo poder realizarlo. Debido a varios factores, como la complejidad del mismo, así como también que en algunas partes de la letra nos hubiera gustado tener más ideas de lo que se nos estaba pidiendo, ya que no quedaba muy claro.<br/>Por suerte para nosotros los apuntes tomados en clase, las respuestas de los profes a dudas de los compañeros y algunas propias, nos ayudaron a entender un poco mejor que es lo que se quería conseguir con este trabajo."
+print("También queremos destacar que poder ver los resultados de los conceptos aprendidos en clase, en un trabajo final, nos ayuda a entender mejor el funcionamiento de los mismos, y nos da una idea de como se aplican en la vida real.")
+text += "<br/>También queremos destacar que poder ver los resultados de los conceptos aprendidos en clase, en un trabajo final, nos ayuda a entender mejor el funcionamiento de los mismos, y nos da una idea de como se aplican en la vida real."
+print("Para finalizar. Agradecemos a los profesores por la paciencia y la dedicación que nos brindaron en este curso, y esperamos que este trabajo sea de su agrado.\n\n")
+text += "<br/>Para finalizar. Agradecemos a los profesores por la paciencia y la dedicación que nos brindaron en este curso, y esperamos que este trabajo sea de su agrado.<br/><br/>"
+guardarTxt(text)
+
+# Información sobre el Proyecto
+text = "<br/>Enlace al repositorio de GitHub: <br/>"
+guardarHeader(text,2)
+text = "https://github.com/jumpert/TareaFinal-PyEA.git  <br/><br/>*Nota: Se recomienda clonar el repositorio para poder visualizar el proyecto completo. Para ello utiliza el comando:  'git clone https://github.com/jumpert/TareaFinal-PyEA.git'"
+guardarTxt(text)
+
+print("Se esta formalizando el documento, este proceso puede tardar unos segundos...\nPor favor espere...")
 # chequear si el documento ya existe
 if os.path.exists("Entregable_{}.pdf".format(fecha)):
     #auto incrementar el numero de documento
